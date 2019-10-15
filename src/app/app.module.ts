@@ -1,6 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+// Temporal
+import { FormsModule } from '@angular/forms';
+
 // Rutas
 import { APP_ROUTES } from './app.routes';
 
@@ -21,6 +24,7 @@ import { RegisterComponent } from './login/register.component';
   imports: [
     BrowserModule,
     PagesModule,
+    FormsModule,
     APP_ROUTES
   ],
   providers: [],
