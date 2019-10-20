@@ -18,7 +18,7 @@ export class BreadcrumsComponent implements OnInit {
   ) {
     this.getDataRoute()
         .subscribe( data => {
-          console.log(data);
+          
           this.label =data.titulo;
           this._title.setTitle('AdminPro-'+this.label);
 
