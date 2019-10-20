@@ -99,22 +99,25 @@ export class UsuarioService {
    }
 
    // Actualizar
-   actualizarUsuario( usuario:Usuario, recordar: boolean){
-     let url = URL_SERVICIOS + '/usuario/'+usuario._id;
+   actualizarUsuario( usuario:Usuario, recordar: any){
 
-     if( recordar ){
+    let url = URL_SERVICIOS + '/usuario/'+usuario._id;
+    if(recordar != null){
+      if( recordar ){
         localStorage.setItem('correo', usuario.correo);
       } else {
         localStorage.removeItem('correo');
       }
+    }
 
-      url += '?token='+this.token;
+    url += '?token='+this.token;
 
-     return this._http.put(url, usuario)
+    return this._http.put(url, usuario)
           .pipe(map( (resp: any)  =>{
-
+            if( usuario._id === this.usuario._id){
+              this.guardarStorage(resp.usuario._id, this.token, resp.usuario);
+            }
             swal('Usuario actualizado', usuario.nombre, 'success');
-            this.guardarStorage(resp.usuario._id, this.token, resp.usuario);
             return true;
           })
       );
@@ -131,5 +134,25 @@ export class UsuarioService {
      .catch( resp => {
        console.log(resp);
      });
+   }
+   cargarUsuarios(desde: number = 0){
+    let url = URL_SERVICIOS + '/usuario?desde=' + desde;
+    
+    return this._http.get(url);
+   }
+
+   buscarUsuarios(termino:string){
+     let url= URL_SERVICIOS+'/busqueda/coleccion/usuarios/'+ termino;
+     return this._http.get(url);
+   }
+
+   borrarUsuario(id:string){
+     let url = URL_SERVICIOS + '/usuario/' + id +'?token='+ this.token;
+
+     return this._http.delete(url)
+                .pipe(map( (resp=>{ 
+                  swal('Usuario borrado','El usuario se ha eliminado de los registros','success');
+                  return true;
+                })))
    }
 }

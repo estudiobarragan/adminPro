@@ -10,7 +10,7 @@ import swal from 'sweetalert';
 })
 export class ProfileComponent implements OnInit {
   usuario: Usuario;
-  recuerdame: Boolean;
+  recuerdame: Boolean=false;
   imagenSubir: File;
   imagenTemp: string;
   token: string;
@@ -20,7 +20,11 @@ export class ProfileComponent implements OnInit {
   ) {
     this.usuario = this._usuarioService.usuario;
     this.token = this._usuarioService.token;
-    this.recuerdame = localStorage.getItem('correo').length > 1;
+    let lsRecuerdame =localStorage.getItem('correo');
+    if(lsRecuerdame != null){
+      this.recuerdame=true;
+    }
+
   }
 
   ngOnInit() {
@@ -51,7 +55,6 @@ export class ProfileComponent implements OnInit {
     const urlImagenTemp = reader.readAsDataURL(archivo);
 
     reader.onloadend = () => this.imagenTemp = reader.result;
-
 
   }
   cambiarImagen() {
