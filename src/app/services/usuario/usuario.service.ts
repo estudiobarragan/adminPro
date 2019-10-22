@@ -99,7 +99,7 @@ export class UsuarioService {
    }
 
    // Actualizar
-   actualizarUsuario( usuario:Usuario, recordar: any){
+   actualizarUsuario( usuario: Usuario, recordar: any){
 
     let url = URL_SERVICIOS + '/usuario/'+usuario._id;
     if(recordar != null){
@@ -135,8 +135,8 @@ export class UsuarioService {
        console.log(resp);
      });
    }
-   cargarUsuarios(desde: number = 0){
-    let url = URL_SERVICIOS + '/usuario?desde=' + desde;
+   cargarUsuarios(desde: number = 0, cantidad: number = 5 ){
+    let url = URL_SERVICIOS + '/usuario?desde=' + desde + '&cantidad=' + cantidad;
     
     return this._http.get(url);
    }
@@ -150,8 +150,8 @@ export class UsuarioService {
      let url = URL_SERVICIOS + '/usuario/' + id +'?token='+ this.token;
 
      return this._http.delete(url)
-                .pipe(map( (resp=>{ 
-                  swal('Usuario borrado','El usuario se ha eliminado de los registros','success');
+                .pipe(map( ((resp: any)=>{
+                  swal('Usuario borrado',`El usuario: ${resp.usuario_borrado.nombre}, se ha eliminado de los registros`,'success');
                   return true;
                 })))
    }

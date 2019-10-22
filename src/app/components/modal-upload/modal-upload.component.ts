@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService, SubirArchivoService } from 'src/app/services/service.index';
 import { ModalUploadService } from './modal-upload.service';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-modal-upload',
@@ -28,9 +29,9 @@ export class ModalUploadComponent implements OnInit {
   subirImagen(){
     this._subirArchivoService.subirArchivo(this.imagenSubir, this._modalUploadService.tipo, this._modalUploadService.id)
         .then( (resp: any)=>{
-
           this._modalUploadService.notificacion.emit( resp );
           this.cerrarModal();
+          swal('Imagen actualizada',resp.mensaje,'success');
         })
         .catch((resp: any) => {
           console.log('Error: ', resp);

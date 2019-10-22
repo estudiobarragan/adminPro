@@ -81,8 +81,6 @@ export class UsuariosComponent implements OnInit {
       if(borrar){
         this._usuariosServices.borrarUsuario( usuario._id )
             .subscribe( (borrado:any)=> {
-              console.log(borrado);
-
               this.cargarUsuarios();
             })
       }
