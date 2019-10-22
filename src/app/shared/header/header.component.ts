@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from 'src/app/services/service.index';
 import { Usuario } from '../../models/usuario.models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     // tslint:disable-next-line: variable-name
-    public _usuarioService: UsuarioService
+    public _usuarioService: UsuarioService,
+    public _router: Router
   ) { }
 
   ngOnInit() {
@@ -21,5 +23,7 @@ export class HeaderComponent implements OnInit {
     this.token =  this._usuarioService.token;
     
   }
-
+  buscar( termino: string ){
+    this._router.navigate(['/busqueda',termino])
+  }
 }
