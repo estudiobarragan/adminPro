@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService, SubirArchivoService } from 'src/app/services/service.index';
 import { ModalUploadService } from './modal-upload.service';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-modal-upload',
@@ -31,7 +31,7 @@ export class ModalUploadComponent implements OnInit {
         .then( (resp: any)=>{
           this._modalUploadService.notificacion.emit( resp );
           this.cerrarModal();
-          swal('Imagen actualizada',resp.mensaje,'success');
+          Swal.fire('Imagen actualizada',resp.mensaje,'success');
         })
         .catch((resp: any) => {
           console.log('Error: ', resp);
@@ -51,17 +51,28 @@ export class ModalUploadComponent implements OnInit {
     }
     if (archivo.type.indexOf('image') < 0) {
       this.imagenSubir = null;
-      swal('Solo imagenes', 'El archivo seleccionado no es una imagen', 'error');
+      Swal.fire('Solo imagenes', 'El archivo seleccionado no es una imagen', 'error');
       return;
     }
     this.imagenSubir = archivo;
-  
+
     const reader = new FileReader();
     const urlImagenTemp = reader.readAsDataURL(archivo);
-  
-    reader.onloadend = () => this.imagenTemp = reader.result;
-  
+
+    reader.onloadend = () => this.imagenTemp = this.ab2str( reader.result );
   }
 
+  ab2str( buf ) {
+    return String.fromCharCode.apply(null, new Uint16Array(buf));
+  }
+
+  str2ab( str ) {
+    var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
+    var bufView = new Uint16Array(buf);
+    for (var i=0, strLen=str.length; i < strLen; i++) {
+      bufView[i] = str.charCodeAt(i);
+    }
+    return buf;
+  }
 
 }

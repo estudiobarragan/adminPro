@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../../models/usuario.models';
 import { UsuarioService } from 'src/app/services/service.index';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
 
-declare var swal: any;
 
 @Component({
   selector: 'app-usuarios',
@@ -67,18 +66,19 @@ export class UsuariosComponent implements OnInit {
   }
   borrarUsuario(usuario){
     if(usuario._id === this._usuariosServices.usuario._id){
-      swal('Error', 'No puede borrarse a si mismo','error');
+      Swal.fire('Error', 'No puede borrarse a si mismo','error');
       return;
     }
-    swal({
+    Swal.fire({
       title: 'Esta seguro?',
       text: 'Esta por borrar definitivamente a: '+usuario.nombre,
-      icon: 'warning',
-      buttons: true,
-      dangerMode: true,
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, borrelo !',
+      cancelButtonText: 'No, mantengalo'
     })
     .then(borrar =>{
-      if(borrar){
+      if(borrar.value){
         this._usuariosServices.borrarUsuario( usuario._id )
             .subscribe( (borrado:any)=> {
               this.cargarUsuarios();

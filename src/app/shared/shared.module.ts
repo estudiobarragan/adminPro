@@ -10,6 +10,8 @@ import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { BreadcrumsComponent } from './breadcrums/breadcrums.component';
+import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
+
 
 @NgModule({
     imports:[
@@ -21,13 +23,15 @@ import { BreadcrumsComponent } from './breadcrums/breadcrums.component';
         NopagefoundComponent,
         HeaderComponent,
         SidebarComponent,
-        BreadcrumsComponent
+        BreadcrumsComponent,
+        ModalUploadComponent
     ],
     exports:[
         NopagefoundComponent,
         HeaderComponent,
         SidebarComponent,
-        BreadcrumsComponent
+        BreadcrumsComponent,
+        ModalUploadComponent
     ]
 })
 

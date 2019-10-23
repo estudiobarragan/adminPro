@@ -9,8 +9,7 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 
 // Guards
-import { AdminGuard } from '../services/service.index';
-import { LoginGuardGuard } from '../services/guards/login-guard.guard';
+import { AdminGuard, VerificaTokenGuard } from '../services/service.index';
 
 import { ProfileComponent } from './profile/profile.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
@@ -21,12 +20,7 @@ import { BusquedaComponent } from './busqueda/busqueda.component';
 
 
 const pagesRoutes: Routes=[
-    {
-        path: '',
-        component: PagesComponent,
-        canActivate:[LoginGuardGuard],
-        children: [
-            {path: 'dashboard', component: DashboardComponent, data:{titulo:'Dashboard'}},
+            {path: 'dashboard', component: DashboardComponent, canActivate: [VerificaTokenGuard] , data:{titulo:'Dashboard'}},
             {path: 'progress', component: ProgressComponent, data:{titulo:'ProgressBars'}},
             {path: 'graficas1', component: Graficas1Component, data:{titulo:'Gráficas'}},
             {path: 'promesas', component: PromesasComponent, data:{titulo:'Promesas'}}, 
@@ -45,8 +39,7 @@ const pagesRoutes: Routes=[
             {path: 'medicos', component: MedicosComponent, data:{titulo:'Mantenimiento de medicos'}},
             {path: 'medico/:id', component: MedicoComponent, data:{titulo:'Actualizar Medico'}},
             {path: '', redirectTo: '/dashboard', pathMatch:'full'}
-        ]
-    }
+
 ];
 
 export const PAGES_ROUTES = RouterModule.forChild(pagesRoutes);

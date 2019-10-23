@@ -4,7 +4,7 @@ import { Hospital } from '../../models/hospital.model';
 import { HospitalService } from '../../services/hospital/hospital.service';
 import { Medico } from '../../models/medico.model';
 import { MedicoService } from '../../services/medico/medico.service';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 import { UsuarioService } from '../../services/usuario/usuario.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
@@ -53,7 +53,7 @@ export class MedicoComponent implements OnInit {
       this._medicoService.guardarMedico( this.medico )
           .subscribe( resp =>{
             let medicoG = resp.medico
-            swal('Medico '+ resp.estado, medicoG.nombre , 'success');
+            Swal.fire('Medico '+ resp.estado, medicoG.nombre , 'success');
             this.medico._id = medicoG._id; 
             this._router.navigate(['/medico', medicoG._id]);
           })

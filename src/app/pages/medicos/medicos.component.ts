@@ -3,6 +3,7 @@ import { Medico } from '../../models/medico.model';
 import { MedicoService } from '../../services/medico/medico.service';
 import { UsuarioService } from '../../services/usuario/usuario.service';
 
+declare var swal: any;
 
 @Component({
   selector: 'app-medicos',
